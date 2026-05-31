@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>ICTU Booklet Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* UI Styles (no-print) */
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      margin: 0;
+      color: #334155;
+    }
+    .no-print {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .header h1 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      color: #0f172a;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    .header p {
+      color: #64748b;
+      font-size: 1.1rem;
+    }
+    .upload-area {
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 60px 20px;
+      text-align: center;
+      background-color: #ffffff;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .upload-area:hover {
+      border-color: #3b82f6;
+      background-color: #eff6ff;
+    }
+    .upload-area input {
+      display: none;
+    }
+    .btn-upload {
+      background-color: #3b82f6;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      pointer-events: none;
+    }
+    .actions-area {
+      display: none;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .btn-action {
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-action:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .btn-odd {
+      background-color: #ec4899;
+      color: white;
+    }
+    .btn-even {
+      background-color: #10b981;
+      color: white;
+    }
+    .loading {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+      font-weight: 600;
+      color: #3b82f6;
+    }
+
+    /* Print Setup */
+    #print-container {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+    .a4-sheet {
+      width: 297mm;
+      height: 210mm;
+      background: white;
+      margin: 20px 0;
+      display: flex;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    .a5-page {
+      width: 148.5mm;
+      height: 210mm;
+      padding: 10mm 12mm;
+      box-sizing: border-box;
+      display: flex;
+      gap: 20px;
+      position: relative;
+    }
+    .col {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Vertical dividing line between pages for preview */
+    .a5-page:first-child {
+      border-right: 1px dashed #e2e8f0;
+    }
+
+    /* Question Styles (A5 Optimized) */
+    .question-block {
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .question-text {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 8.5pt;
+      color: #000000;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .question-image {
+      max-width: 100%;
+      max-height: 40mm;
+      object-fit: contain;
+      display: block;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      border-radius: 4px;
+    }
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .option-item {
+      font-family: 'Inter', sans-serif;
+      font-size: 8pt;
+      color: #1a202c;
+      padding-left: 12px;
+      text-indent: -12px;
+      margin-left: 12px;
+      line-height: 1.4;
+    }
+    .correct-option {
+      font-weight: 700;
+      text-decoration: underline;
+      color: #000000;
+    }
+    .option-item img, img.admin-class-image {
+      max-width: 100%;
+      height: auto;
+      display: inline-block;
+      vertical-align: middle;
+      margin-top: 4px;
+      margin-bottom: 4px;
+    }
+    
+    /* Cover Page Styles */
+    .cover-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      text-align: center;
+    }
+    .cover-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 24pt;
+      font-weight: 800;
+      color: #000000;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .cover-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 14pt;
+      font-weight: 600;
+      color: #4a5568;
+    }
+
+    /* Print specific queries */
+    @media print {
+      @page {
+        size: A4 landscape;
+        margin: 0;
+      }
+      body {
+        background-color: white;
+      }
+      .no-print {
+        display: none !important;
+      }
+      #print-container {
+        display: block;
+      }
+      .a4-sheet {
+        margin: 0;
+        box-shadow: none;
+        page-break-after: always;
+        break-after: page;
+      }
+      .a5-page:first-child {
+        border-right: none;
+      }
+      
+      /* Hide sheets based on body class */
+      body.print-odd .a4-sheet.even { display: none !important; }
+      body.print-even .a4-sheet.odd { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- UI Area -->
+  <div class="no-print">
+    <div class="header">
+      <h1>ICTU Booklet Generator</h1>
+      <p>Kéo thả file .json vào đây để tạo tài liệu dạng sổ tay (Booklet) in 2 mặt thủ công</p>
+    </div>
+
+    <div class="upload-area" id="drop-zone" onclick="document.getElementById('file-input').click()">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 15px;">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="17 8 12 3 7 8"></polyline>
+        <line x1="12" y1="3" x2="12" y2="15"></line>
+      </svg>
+      <br>
+      <button class="btn-upload">Chọn File .json</button>
+      <input type="file" id="file-input" accept=".json">
+    </div>
+
+    <div class="loading" id="loading-msg">Đang dàn trang... Vui lòng chờ...</div>
+
+    <div class="actions-area" id="actions-area">
+      <button class="btn-action btn-odd" onclick="printOdd()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+        In Mặt Trước (Trang Lẻ)
+      </button>
+      <button class="btn-action btn-even" onclick="printEven()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+        In Mặt Sau (Trang Chẵn)
+      </button>
+    </div>
+  </div>
+
+  <!-- Staging area for calculating heights (hidden) -->
+  <div id="staging" style="position: absolute; top: 0; left: -9999px; width: 148.5mm; visibility: hidden;"></div>
+
+  <!-- Container for Final Printable Sheets -->
+  <div id="print-container"></div>
+
+  <script>
+    const fileInput = document.getElementById('file-input');
+    const staging = document.getElementById('staging');
+    const printContainer = document.getElementById('print-container');
+    const actionsArea = document.getElementById('actions-area');
+    const loadingMsg = document.getElementById('loading-msg');
+
+    fileInput.addEventListener('change', handleFile);
+
+    function handleFile(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = async (event) => {
+        try {
+          loadingMsg.style.display = 'block';
+          actionsArea.style.display = 'none';
+          printContainer.innerHTML = '';
+          staging.innerHTML = '';
+          printContainer.style.display = 'none';
+
+          const data = JSON.parse(event.target.result);
+          
+          // Let the browser render the loading text before heavy work
+          setTimeout(() => processData(data), 50); 
+        } catch (err) {
+          alert("Lỗi khi đọc file JSON: " + err.message);
+          loadingMsg.style.display = 'none';
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    async function processData(data) {
+      const courseName = (data.metadata?.course || 'ĐỀ CƯƠNG ÔN TẬP').toUpperCase();
+      const questions = data.questions || [];
+
+      let pages = [];
+      let currentPage = null;
+      let currentCol = null;
+
+      function createPage() {
+        const p = document.createElement('div');
+        p.className = 'a5-page';
+        p.innerHTML = `<div class="col left"></div><div class="col right"></div>`;
+        staging.appendChild(p);
+        pages.push(p);
+        currentPage = p;
+        currentCol = p.querySelector('.col.left');
+        return p;
+      }
+
+      // Create Cover Page
+      const coverPage = createPage();
+      coverPage.innerHTML = `
+        <div class="cover-container" style="width:100%;">
+          <div class="cover-title">${courseName}</div>
+          <div class="cover-subtitle">ĐỀ CƯƠNG ÔN TẬP TỔNG HỢP</div>
+        </div>
+      `;
+      // Start real content on next page
+      createPage();
+
+      for (let i = 0; i < questions.length; i++) {
+        const q = questions[i];
+        
+        let cleanedQText = (q.qHtml || q.question || '').replace(/^Câu[\s\d:]*/i, '').trim();
+        const optA = q.optHtmlA || q.optA || '';
+        const optB = q.optHtmlB || q.optB || '';
+        const optC = q.optHtmlC || q.optC || '';
+        const optD = q.optHtmlD || q.optD || '';
+        
+        const isCorrect = (idx) => idx === q.correctIndex ? 'correct-option' : '';
+
+        let imageHtml = '';
+        if (q.image && q.image.trim() !== '') {
+          imageHtml = `<img src="${q.image.trim()}" class="question-image" />`;
+        }
+
+        const qEl = document.createElement('div');
+        qEl.className = 'question-block';
+        qEl.innerHTML = `
+          <div class="question-text">Câu ${i + 1}: ${cleanedQText}</div>
+          ${imageHtml}
+          <div class="options-list">
+            <div class="option-item ${isCorrect(0)}"><span class="opt-prefix">A.</span> ${optA}</div>
+            <div class="option-item ${isCorrect(1)}"><span class="opt-prefix">B.</span> ${optB}</div>
+            <div class="option-item ${isCorrect(2)}"><span class="opt-prefix">C.</span> ${optC}</div>
+            <div class="option-item ${isCorrect(3)}"><span class="opt-prefix">D.</span> ${optD}</div>
+          </div>
+        `;
+
+        await loadImagesAndMeasure(qEl, currentCol);
+
+        // Check if overflows
+        if (currentCol.scrollHeight > currentCol.clientHeight) {
+          // Only move if it's not the ONLY element in the column
+          if (currentCol.childElementCount > 1) {
+            currentCol.removeChild(qEl);
+            
+            if (currentCol.classList.contains('left')) {
+              currentCol = currentPage.querySelector('.col.right');
+            } else {
+              createPage();
+            }
+            
+            await loadImagesAndMeasure(qEl, currentCol);
+          }
+        }
+      }
+
+      // Imposition Algorithm (Booklet)
+      // Pad to multiple of 4
+      while(pages.length % 4 !== 0) {
+        createPage();
+      }
+
+      const totalPages = pages.length;
+      
+      for (let i = 0; i < totalPages / 4; i++) {
+        // Front Sheet (Odd)
+        const frontLeft = pages[totalPages - (i * 2) - 1];
+        const frontRight = pages[i * 2];
+        
+        const frontSheet = document.createElement('div');
+        frontSheet.className = 'a4-sheet odd';
+        frontSheet.appendChild(frontLeft);
+        frontSheet.appendChild(frontRight);
+        printContainer.appendChild(frontSheet);
+        
+        // Back Sheet (Even)
+        const backLeft = pages[(i * 2) + 1];
+        const backRight = pages[totalPages - (i * 2) - 2];
+        
+        const backSheet = document.createElement('div');
+        backSheet.className = 'a4-sheet even';
+        backSheet.appendChild(backLeft);
+        backSheet.appendChild(backRight);
+        printContainer.appendChild(backSheet);
+      }
+
+      staging.innerHTML = '';
+      loadingMsg.style.display = 'none';
+      actionsArea.style.display = 'flex';
+      printContainer.style.display = 'flex';
+    }
+
+    function loadImagesAndMeasure(element, parent) {
+      return new Promise(resolve => {
+        parent.appendChild(element);
+        const images = element.querySelectorAll('img');
+        if (images.length === 0) {
+          resolve();
+          return;
+        }
+        
+        let loadedCount = 0;
+        images.forEach(img => {
+          if (img.complete) {
+            loadedCount++;
+            if (loadedCount === images.length) resolve();
+          } else {
+            img.onload = () => {
+              loadedCount++;
+              if (loadedCount === images.length) resolve();
+            };
+            img.onerror = () => {
+              loadedCount++;
+              if (loadedCount === images.length) resolve();
+            };
+          }
+        });
+      });
+    }
+
+    function printOdd() {
+      document.body.classList.remove('print-even');
+      document.body.classList.add('print-odd');
+      window.print();
+    }
+
+    function printEven() {
+      document.body.classList.remove('print-odd');
+      document.body.classList.add('print-even');
+      window.print();
+    }
+  </script>
+</body>
+</html>
