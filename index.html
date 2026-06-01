@@ -397,6 +397,9 @@
 
       const totalPages = pages.length;
       
+      const frontSheets = [];
+      const backSheets = [];
+      
       for (let i = 0; i < totalPages / 4; i++) {
         // Front Sheet (Odd)
         const frontLeft = pages[totalPages - (i * 2) - 1];
@@ -406,7 +409,7 @@
         frontSheet.className = 'a4-sheet odd';
         frontSheet.appendChild(frontLeft);
         frontSheet.appendChild(frontRight);
-        printContainer.appendChild(frontSheet);
+        frontSheets.push(frontSheet);
         
         // Back Sheet (Even)
         const backLeft = pages[(i * 2) + 1];
@@ -416,8 +419,15 @@
         backSheet.className = 'a4-sheet even';
         backSheet.appendChild(backLeft);
         backSheet.appendChild(backRight);
-        printContainer.appendChild(backSheet);
+        backSheets.push(backSheet);
       }
+
+      // Đảo ngược thứ tự các trang mặt sau để in thủ công dễ dàng hơn
+      backSheets.reverse();
+
+      // Thêm vào container
+      frontSheets.forEach(sheet => printContainer.appendChild(sheet));
+      backSheets.forEach(sheet => printContainer.appendChild(sheet));
 
       staging.innerHTML = '';
       loadingMsg.style.display = 'none';
