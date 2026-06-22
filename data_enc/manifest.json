@@ -1,0 +1,238 @@
+{
+  "subjects": [
+    {
+      "file": "Anh_van_1.enc",
+      "name": "Anh văn 1",
+      "code": "ENG131",
+      "questions": 384
+    },
+    {
+      "file": "Anh_van_2.enc",
+      "name": "Anh văn 2",
+      "code": "ENG132",
+      "questions": 291
+    },
+    {
+      "file": "Anh_van_3.enc",
+      "name": "Anh văn 3",
+      "code": "ENG136",
+      "questions": 311
+    },
+    {
+      "file": "Anh_van_4.enc",
+      "name": "Anh văn 4",
+      "code": "ENG135",
+      "questions": 281
+    },
+    {
+      "file": "An_toan_thong_tin.enc",
+      "name": "An toàn thông tin",
+      "code": "SFI331",
+      "questions": 361
+    },
+    {
+      "file": "Cau_truc_du_lieu_va_giai_thuat.enc",
+      "name": "Cấu trúc dữ liệu và giải thuật",
+      "code": "DAS231",
+      "questions": 174
+    },
+    {
+      "file": "Cau_truc_may_tinh_va_he_dieu_hanh.enc",
+      "name": "Cấu trúc máy tính và hệ điều hành",
+      "code": "COM331",
+      "questions": 115
+    },
+    {
+      "file": "Chuyen_doi_so.enc",
+      "name": "Chuyển đổi số",
+      "code": "CDS231",
+      "questions": 195
+    },
+    {
+      "file": "Chu_nghia_xa_hoi_khoa_hoc.enc",
+      "name": "Chủ nghĩa xã hội khoa học",
+      "code": "STS121",
+      "questions": 157
+    },
+    {
+      "file": "Cong_nghe_.Net.enc",
+      "name": "Công nghệ .Net",
+      "code": "CET331",
+      "questions": 340
+    },
+    {
+      "file": "Co_so_du_lieu.enc",
+      "name": "Cơ sở dữ liệu",
+      "code": "BAD131",
+      "questions": 130
+    },
+    {
+      "file": "Dien_toan_dam_may.enc",
+      "name": "Điện toán đám mây",
+      "code": "CCP431",
+      "questions": 220
+    },
+    {
+      "file": "He_Quan_tri_co_so_du_lieu.enc",
+      "name": "Hệ Quản trị cơ sở dữ liệu",
+      "code": "DMS231",
+      "questions": 311
+    },
+    {
+      "file": "Hoc_may.enc",
+      "name": "Học máy",
+      "code": "MAL332",
+      "questions": 219
+    },
+    {
+      "file": "Kinh_te_chinh_tri_Mac-Lenin.enc",
+      "name": "Kinh tế chính trị Mác-Lênin",
+      "code": "POE121",
+      "questions": 113
+    },
+    {
+      "file": "Ky_thuat_lap_trinh.enc",
+      "name": "Kỹ thuật lập trình",
+      "code": "PTE231",
+      "questions": 330
+    },
+    {
+      "file": "Lap_trinh_cho_thiet_bi_di_dong.enc",
+      "name": "Lập trình cho thiết bị di động",
+      "code": "LTT332",
+      "questions": 320
+    },
+    {
+      "file": "Lap_trinh_huong_doi_tuong.enc",
+      "name": "Lập trình hướng đối tượng",
+      "code": "OOP231",
+      "questions": 349
+    },
+    {
+      "file": "Lich_su_Dang_Cong_san_Viet_Nam.enc",
+      "name": "Lịch sử Đảng Cộng sản Việt Nam",
+      "code": "PHV121",
+      "questions": 160
+    },
+    {
+      "file": "Mang_may_tinh.enc",
+      "name": "Mạng máy tính",
+      "code": "CON131",
+      "questions": 137
+    },
+    {
+      "file": "Mang_may_tinh_nang_cao.enc",
+      "name": "Mạng máy tính nâng cao",
+      "code": "CNA431",
+      "questions": 392
+    },
+    {
+      "file": "Nhap_mon_Cong_nghe_phan_mem.enc",
+      "name": "Nhập môn Công nghệ phần mềm",
+      "code": "ISE131",
+      "questions": 289
+    },
+    {
+      "file": "Phan_tich_thiet_ke_he_thong.enc",
+      "name": "Phân tích thiết kế hệ thống",
+      "code": "ASD232",
+      "questions": 318
+    },
+    {
+      "file": "Phat_trien_ung_dung_chuyen_sau.enc",
+      "name": "Phát triển ứng dụng chuyên sâu",
+      "code": "UCS241",
+      "questions": 328
+    },
+    {
+      "file": "Phat_trien_ung_dung_PHP.enc",
+      "name": "Phát triển ứng dụng PHP",
+      "code": "PHP241",
+      "questions": 454
+    },
+    {
+      "file": "Phuong_phap_phat_trien_phan_mem_huong_doi_tuong.enc",
+      "name": "Phương pháp phát triển phần mềm hướng đối tượng",
+      "code": "PPM231",
+      "questions": 462
+    },
+    {
+      "file": "Quan_ly_du_an_Cong_nghe_thong_tin.enc",
+      "name": "Quản lý dự án Công nghệ thông tin",
+      "code": "ITP331",
+      "questions": 215
+    },
+    {
+      "file": "Quan_tri_he_thong.enc",
+      "name": "Quản trị hệ thống",
+      "code": "SYM431",
+      "questions": 370
+    },
+    {
+      "file": "Tin_hoc_dai_cuong.enc",
+      "name": "Tin học đại cương",
+      "code": "GIS131",
+      "questions": 101
+    },
+    {
+      "file": "Toan_cao_cap.enc",
+      "name": "Toán cao cấp",
+      "code": "MAT140",
+      "questions": 214
+    },
+    {
+      "file": "Toan_roi_rac.enc",
+      "name": "Toán rời rạc",
+      "code": "DEM230",
+      "questions": 176
+    },
+    {
+      "file": "Triet_hoc_Mac-Lenin.enc",
+      "name": "Triết học Mác-Lênin",
+      "code": "POL131",
+      "questions": 145
+    },
+    {
+      "file": "Tri_tue_nhan_tao.enc",
+      "name": "Trí tuệ nhân tạo",
+      "code": "ARI231",
+      "questions": 325
+    },
+    {
+      "file": "Tuong_tac_nguoi_may.enc",
+      "name": "Tương tác người máy",
+      "code": "TNM333",
+      "questions": 255
+    },
+    {
+      "file": "Tu_chon_2__Marketing_so.enc",
+      "name": "Tự chọn 2: Marketing số",
+      "code": "MKT331",
+      "questions": 205
+    },
+    {
+      "file": "Tu_tuong_Ho_Chi_Minh_-_HCM120.enc",
+      "name": "Tư tưởng Hồ Chí Minh - HCM120",
+      "code": "HCM120",
+      "questions": 154
+    },
+    {
+      "file": "Vat_ly.enc",
+      "name": "Vật lý",
+      "code": "VLL121",
+      "questions": 105
+    },
+    {
+      "file": "Xac_suat_thong_ke.enc",
+      "name": "Xác suất thống kê",
+      "code": "PST231",
+      "questions": 125
+    },
+    {
+      "file": "Xu_ly_anh.enc",
+      "name": "Xử lý ảnh",
+      "code": "IMP231",
+      "questions": 430
+    }
+  ]
+}
